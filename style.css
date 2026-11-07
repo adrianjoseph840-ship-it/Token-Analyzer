@@ -1,0 +1,335 @@
+
+/* ==============================
+   1. General page styling
+============================== */
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --background: #f4f7fb;
+  --surface: #ffffff;
+  --text: #1e293b;
+  --muted: #64748b;
+  --border: #dbe3ee;
+  --success: #15803d;
+  --success-bg: #dcfce7;
+  --danger: #b91c1c;
+  --danger-bg: #fee2e2;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--background);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* ==============================
+   2. Header
+============================== */
+
+.site-header {
+  padding: 32px 20px;
+  text-align: center;
+  background: #ffffff;
+  border-bottom: 1px solid var(--border);
+}
+
+.site-header h1 {
+  margin: 0 0 8px;
+  color: var(--primary);
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+}
+
+.site-header p {
+  margin: 0;
+  color: var(--muted);
+}
+
+/* ==============================
+   3. Main analyzer
+============================== */
+
+.container {
+  width: min(900px, 92%);
+  margin: 32px auto;
+}
+
+.analyzer-panel {
+  padding: 26px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 5px 18px rgb(15 23 42 / 5%);
+}
+
+.analyzer-panel h2 {
+  margin-top: 0;
+  font-size: 1.25rem;
+}
+
+.analyzer-panel > p {
+  color: var(--muted);
+}
+
+/* ==============================
+   4. Input area
+============================== */
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+textarea {
+  display: block;
+  width: 100%;
+  min-height: 130px;
+  padding: 14px;
+  resize: vertical;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--text);
+  font: 15px/1.6 Consolas, "Courier New", monospace;
+}
+
+textarea:focus {
+  outline: 3px solid rgb(37 99 235 / 15%);
+  border-color: var(--primary);
+}
+
+/* ==============================
+   5. Buttons
+============================== */
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+button {
+  padding: 11px 18px;
+  border: 0;
+  border-radius: 7px;
+  background: var(--primary);
+  color: #ffffff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--primary-dark);
+}
+
+button:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 3px;
+}
+
+button.secondary {
+  background: #e2e8f0;
+  color: #1e293b;
+}
+
+button.secondary:hover {
+  background: #cbd5e1;
+}
+
+/* ==============================
+   6. Analysis result
+============================== */
+
+.result {
+  margin-top: 24px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-left: 5px solid #94a3b8;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.result h3 {
+  margin: 0 0 8px;
+}
+
+.result p {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.result.accepted {
+  background: var(--success-bg);
+  border-color: #86efac;
+  border-left-color: var(--success);
+  color: var(--success);
+}
+
+.result.rejected {
+  background: var(--danger-bg);
+  border-color: #fca5a5;
+  border-left-color: var(--danger);
+  color: var(--danger);
+}
+
+/* ==============================
+   7. Result sections
+============================== */
+
+.result-section {
+  margin-top: 30px;
+}
+
+.result-section h2 {
+  margin-bottom: 10px;
+}
+
+.result-section > p {
+  color: var(--muted);
+}
+
+/* ==============================
+   8. Tables
+============================== */
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 14px;
+}
+
+thead {
+  background: #eff6ff;
+}
+
+th,
+td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+th {
+  color: #1e40af;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+td {
+  overflow-wrap: anywhere;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr:hover {
+  background: #f8fafc;
+}
+
+td:first-child,
+td:nth-child(2) {
+  font-family: Consolas, "Courier New", monospace;
+}
+
+/* ==============================
+   9. Error list
+============================== */
+
+#error-list {
+  padding-left: 22px;
+}
+
+#error-list li {
+  margin-bottom: 7px;
+  overflow-wrap: anywhere;
+}
+
+#error-list .error-item {
+  color: var(--danger);
+}
+
+/* ==============================
+   10. Summary cards
+============================== */
+
+.summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.summary-card {
+  padding: 16px;
+  text-align: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.summary-card span {
+  color: var(--primary);
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+.summary-card p {
+  margin: 3px 0 0;
+  color: var(--muted);
+}
+
+/* ==============================
+   11. Footer
+============================== */
+
+footer {
+  padding: 20px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* ==============================
+   12. Responsive design
+============================== */
+
+@media (max-width: 600px) {
+  .container {
+    width: 94%;
+    margin: 18px auto;
+  }
+
+  .analyzer-panel {
+    padding: 18px;
+  }
+
+  .site-header {
+    padding: 25px 15px;
+  }
+
+  .button-row button {
+    flex: 1;
+  }
+
+  th,
+  td {
+    padding: 9px;
+  }
+}
