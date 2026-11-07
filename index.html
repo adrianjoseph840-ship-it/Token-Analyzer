@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Programming Token Analyzer</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <h1>Programming Token Analyzer</h1>
+    <p>
+      Analyze source code using lexical analysis and
+      automata theory.
+    </p>
+  </header>
+
+  <main class="container">
+    <section class="analyzer-panel">
+      <h2>Enter Source Code</h2>
+      <p>
+        Enter a statement to identify its tokens and examine
+        how the analyzer processes the input.
+      </p>
+
+      <form id="analyzer-form">
+        <label for="source-code">Source Code</label>
+        <textarea
+          id="source-code"
+          rows="4"
+          spellcheck="false"
+          placeholder="Example: let age = 20;"
+        ></textarea>
+
+        <div class="button-row">
+          <button type="submit">Analyze Input</button>
+          <button type="button" id="clear-button" class="secondary">
+            Clear
+          </button>
+        </div>
+      </form>
+
+      <div id="analysis-result" class="result" aria-live="polite">
+        <h3>Analysis Result</h3>
+        <p>Enter source code and click Analyze Input.</p>
+      </div>
+
+      <section class="result-section">
+        <h2>Recognized Tokens</h2>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>No.</th>
+                <th>Lexeme</th>
+                <th>Token Type</th>
+                <th>Line</th>
+                <th>Column</th>
+              </tr>
+            </thead>
+            <tbody id="token-table-body">
+              <tr>
+                <td colspan="5">No tokens analyzed yet.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="result-section">
+        <h2>Scanning Process</h2>
+        <p>
+          This table shows how the analyzer reads the input
+          and identifies each token or lexical error.
+        </p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Step</th>
+                <th>Input</th>
+                <th>Recognized As</th>
+                <th>Result</th>
+              </tr>
+            </thead>
+            <tbody id="trace-table-body">
+              <tr>
+                <td colspan="4">The scanning process will appear here.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="result-section">
+        <h2>Lexical Errors</h2>
+        <ul id="error-list">
+          <li>No analysis performed yet.</li>
+        </ul>
+      </section>
+
+      <section class="summary">
+        <div class="summary-card">
+          <span id="token-count">0</span>
+          <p>Total Tokens</p>
+        </div>
+
+        <div class="summary-card">
+          <span id="error-count">0</span>
+          <p>Total Errors</p>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    <p>Programming Token Analyzer | Automata Theory Project</p>
+  </footer>
+</body>
+</html>
