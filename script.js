@@ -904,6 +904,65 @@ function analyzeInput(event) {
 
   const source = document.getElementById("source-code").value;
 
+  const analysis = analyzeSource(source);
+  const {
+    lexical,
+    errors,
+    trace,
+    syntaxPassed,
+    semanticPassed,
+    accepted
+  } = analysis;
+
+  const status = accepted ? "ACCEPTED" : "NOT ACCEPTED";
+
+  const resultPanel = document.getElementById("analysis-result");
+
+  resultPanel.classList.remove("accepted", "rejected");
+  resultPanel.classList.add(accepted ? "accepted" : "rejected");
+  resultPanel.replaceChildren();
+
+  const heading = document.createElement("h3");
+  heading.textContent = "Analysis Result";
+
+  const message = document.createElement("p");
+  message.textContent = status;
+
+  const details = document.createElement("p");
+
+  if (lexical.errors.length > 0) {
+    details.textContent =
+      `Lexical analysis failed with ${lexical.errors.length} lexical error(s).`;
+  } else if (!syntaxPassed) {
+    details.textContent =
+      "Lexical analysis passed, but syntax analysis failed.";
+  } else if (!semanticPassed) {
+    details.textContent =
+      "Lexical and syntax analysis passed, but semantic analysis found errors.";
+  } else {
+    details.textContent =
+      `All three stages passed. Recognized ${lexical.tokens.length} token(s).`;
+  }
+
+  resultPanel.append(heading, message, details);
+
+  document.getElementById("token-count").textContent =
+    lexical.tokens.length;
+
+  document.getElementById("error-count").textContent =
+    errors.length;
+
+  displayTokens(lexical.tokens);
+  displayTrace(trace);
+  displayErrors(errors);
+}
+
+/**
+ * Runs the complete compiler front-end without depending on the browser UI.
+ * Keeping this function pure makes the analyzer reusable and testable.
+ */
+function analyzeSource(source) {
+
   // Stage 1: Lexical analysis.
   const lexical = tokenize(source);
   const errors = [...lexical.errors];
@@ -968,47 +1027,14 @@ function analyzeInput(event) {
     semanticPassed &&
     lexical.tokens.length > 0;
 
-  const status = accepted ? "ACCEPTED" : "NOT ACCEPTED";
-
-  const resultPanel = document.getElementById("analysis-result");
-
-  resultPanel.classList.remove("accepted", "rejected");
-  resultPanel.classList.add(accepted ? "accepted" : "rejected");
-  resultPanel.replaceChildren();
-
-  const heading = document.createElement("h3");
-  heading.textContent = "Analysis Result";
-
-  const message = document.createElement("p");
-  message.textContent = status;
-
-  const details = document.createElement("p");
-
-  if (lexical.errors.length > 0) {
-    details.textContent =
-      `Lexical analysis failed with ${lexical.errors.length} lexical error(s).`;
-  } else if (!syntaxPassed) {
-    details.textContent =
-      "Lexical analysis passed, but syntax analysis failed.";
-  } else if (!semanticPassed) {
-    details.textContent =
-      "Lexical and syntax analysis passed, but semantic analysis found errors.";
-  } else {
-    details.textContent =
-      `All three stages passed. Recognized ${lexical.tokens.length} token(s).`;
-  }
-
-  resultPanel.append(heading, message, details);
-
-  document.getElementById("token-count").textContent =
-    lexical.tokens.length;
-
-  document.getElementById("error-count").textContent =
-    errors.length;
-
-  displayTokens(lexical.tokens);
-  displayTrace(trace);
-  displayErrors(errors);
+  return {
+    lexical,
+    errors,
+    trace,
+    syntaxPassed,
+    semanticPassed,
+    accepted
+  };
 }
 
 // ==========================================
@@ -1043,10 +1069,21 @@ function clearAnalyzer() {
 // 8. CONNECT THE FORM AND BUTTONS
 // ==========================================
 
-document
-  .getElementById("analyzer-form")
-  .addEventListener("submit", analyzeInput);
+if (typeof document !== "undefined") {
+  document
+    .getElementById("analyzer-form")
+    .addEventListener("submit", analyzeInput);
 
-document
-  .getElementById("clear-button")
-  .addEventListener("click", clearAnalyzer);
+  document
+    .getElementById("clear-button")
+    .addEventListener("click", clearAnalyzer);
+}
+
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = {
+    tokenize,
+    SyntaxParser,
+    SemanticAnalyzer,
+    analyzeSource
+  };
+}
