@@ -1050,10 +1050,10 @@ function clearAnalyzer() {
   resultPanel.replaceChildren();
 
   const heading = document.createElement("h3");
-  heading.textContent = "Analysis Result";
+  heading.textContent = "Ready to analyze";
 
   const message = document.createElement("p");
-  message.textContent = "Enter source code and click Analyze Input.";
+  message.textContent = "Enter a program or load the example to begin.";
 
   resultPanel.append(heading, message);
 
@@ -1077,6 +1077,19 @@ if (typeof document !== "undefined") {
   document
     .getElementById("clear-button")
     .addEventListener("click", clearAnalyzer);
+
+  document.getElementById("example-button").addEventListener("click", () => {
+    document.getElementById("source-code").value =
+      'let score = 90;\n\nif (score >= 75) {\n  print("Passed");\n}';
+    document.getElementById("source-code").focus();
+  });
+
+  document.getElementById("source-code").addEventListener("keydown", (event) => {
+    if (event.ctrlKey && event.key === "Enter") {
+      event.preventDefault();
+      document.getElementById("analyzer-form").requestSubmit();
+    }
+  });
 }
 
 if (typeof module !== "undefined" && module.exports) {

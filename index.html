@@ -1,123 +1,40 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Programming Token Analyzer</title>
+  <meta name="description" content="An interactive lexical, syntax, and semantic analyzer for a small teaching language.">
+  <title>LexiScope | Programming Token Analyzer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
 </head>
 <body>
   <header class="site-header">
-    <h1>Programming Token Analyzer</h1>
-    <p>
-      Analyze source code using lexical analysis and
-      automata theory.
-    </p>
+    <nav class="nav container" aria-label="Main navigation"><a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">&lt;/&gt;</span><span>LexiScope</span></a><a class="nav-link" href="#language-guide">Language guide</a></nav>
+    <div id="top" class="hero container">
+      <div><p class="eyebrow">Automata Theory &amp; Formal Languages</p><h1>See how source code becomes <span>meaning.</span></h1><p class="hero-copy">Explore every stage of a compiler front-end—from raw characters and tokens to grammar validation and semantic checks.</p><div class="hero-tags"><span>Lexical analysis</span><span>Syntax parsing</span><span>Semantic validation</span></div></div>
+      <div class="code-preview" aria-hidden="true"><div class="window-bar"><i></i><i></i><i></i><span>example.lex</span></div><pre><code><b>let</b> score = <em>90</em>;
+
+<b>if</b> (score &gt;= <em>75</em>) {
+  <b>print</b>(<q>"Passed"</q>);
+}</code></pre></div>
+    </div>
   </header>
-
-  <main class="container">
-    <section class="analyzer-panel">
-      <h2>Enter Source Code</h2>
-      <p>
-        Enter a statement to identify its tokens and examine
-        how the analyzer processes the input.
-      </p>
-
-      <form id="analyzer-form">
-        <label for="source-code">Source Code</label>
-        <textarea
-          id="source-code"
-          rows="4"
-          spellcheck="false"
-          placeholder="Example: let age = 20;"
-        ></textarea>
-
-        <div class="button-row">
-          <button type="submit">Analyze Input</button>
-          <button type="button" id="clear-button" class="secondary">
-            Clear
-          </button>
-        </div>
-      </form>
-
-      <div id="analysis-result" class="result" aria-live="polite">
-        <h3>Analysis Result</h3>
-        <p>Enter source code and click Analyze Input.</p>
-      </div>
-
-      <section class="result-section">
-        <h2>Recognized Tokens</h2>
-        <div class="table-wrapper">
-          <table>
-            <thead>
-              <tr>
-                <th>No.</th>
-                <th>Lexeme</th>
-                <th>Token Type</th>
-                <th>Line</th>
-                <th>Column</th>
-              </tr>
-            </thead>
-            <tbody id="token-table-body">
-              <tr>
-                <td colspan="5">No tokens analyzed yet.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="result-section">
-        <h2>Scanning Process</h2>
-        <p>
-          This table shows how the analyzer reads the input
-          and identifies each token or lexical error.
-        </p>
-
-        <div class="table-wrapper">
-          <table>
-            <thead>
-              <tr>
-                <th>Step</th>
-                <th>Input</th>
-                <th>Recognized As</th>
-                <th>Result</th>
-              </tr>
-            </thead>
-            <tbody id="trace-table-body">
-              <tr>
-                <td colspan="4">The scanning process will appear here.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="result-section">
-        <h2>Lexical Errors</h2>
-        <ul id="error-list">
-          <li>No analysis performed yet.</li>
-        </ul>
-      </section>
-
-      <section class="summary">
-        <div class="summary-card">
-          <span id="token-count">0</span>
-          <p>Total Tokens</p>
-        </div>
-
-        <div class="summary-card">
-          <span id="error-count">0</span>
-          <p>Total Errors</p>
-        </div>
-      </section>
+  <main class="container main-content">
+    <section class="workspace" aria-labelledby="workspace-title">
+      <div class="section-heading"><div><p class="eyebrow">Interactive workspace</p><h2 id="workspace-title">Analyze a program</h2></div><button type="button" id="example-button" class="text-button">Load example</button></div>
+      <form id="analyzer-form"><label for="source-code">Source code</label><div class="editor-shell"><div class="editor-toolbar"><span>program.lex</span><span>Teaching language</span></div><textarea id="source-code" rows="9" spellcheck="false" aria-describedby="editor-help" placeholder="let age = 20;"></textarea></div><p id="editor-help" class="field-help">Tip: use Ctrl + Enter to run the analysis.</p><div class="button-row"><button type="submit" class="primary-button">Run analysis <span aria-hidden="true">→</span></button><button type="button" id="clear-button" class="secondary-button">Clear workspace</button></div></form>
+      <div id="analysis-result" class="result" aria-live="polite"><div><h3>Ready to analyze</h3><p>Enter a program or load the example to begin.</p></div></div>
+      <section class="summary" aria-label="Analysis summary"><div class="summary-card"><span id="token-count">0</span><p>Tokens recognized</p></div><div class="summary-card"><span id="error-count">0</span><p>Errors detected</p></div><div class="summary-card"><span>3</span><p>Analysis stages</p></div></section>
+      <section class="result-section" aria-labelledby="tokens-title"><div class="result-heading"><div><p class="step-label">Stage 01</p><h2 id="tokens-title">Recognized tokens</h2></div><p>Lexemes classified by the scanner.</p></div><div class="table-wrapper"><table><thead><tr><th scope="col">No.</th><th scope="col">Lexeme</th><th scope="col">Token type</th><th scope="col">Line</th><th scope="col">Column</th></tr></thead><tbody id="token-table-body"><tr><td colspan="5" class="empty-cell">No tokens analyzed yet.</td></tr></tbody></table></div></section>
+      <section class="result-section" aria-labelledby="trace-title"><div class="result-heading"><div><p class="step-label">Stages 01–03</p><h2 id="trace-title">Analysis trace</h2></div><p>A step-by-step record of recognition and validation.</p></div><div class="table-wrapper"><table><thead><tr><th scope="col">Step</th><th scope="col">Input</th><th scope="col">Recognized as</th><th scope="col">Result</th></tr></thead><tbody id="trace-table-body"><tr><td colspan="4" class="empty-cell">The analysis trace will appear here.</td></tr></tbody></table></div></section>
+      <section class="result-section" aria-labelledby="errors-title"><div class="result-heading"><div><p class="step-label">Diagnostics</p><h2 id="errors-title">Errors</h2></div><p>Precise phase, line, and column information.</p></div><div class="error-panel"><ul id="error-list"><li>No analysis performed yet.</li></ul></div></section>
     </section>
+    <section id="language-guide" class="guide" aria-labelledby="guide-title"><div class="section-heading"><div><p class="eyebrow">Reference</p><h2 id="guide-title">Language guide</h2></div></div><div class="guide-grid"><article><span>01</span><h3>Declarations</h3><code>let total = 10;</code><p>Create a variable with an initial value.</p></article><article><span>02</span><h3>Assignments</h3><code>total = total + 5;</code><p>Update a variable that already exists.</p></article><article><span>03</span><h3>Output</h3><code>print(total);</code><p>Print a value or expression.</p></article><article><span>04</span><h3>Conditions</h3><code>if (total &gt; 10) { ... }</code><p>Run a scoped block when a comparison is true.</p></article></div><div class="grammar-note"><strong>Supported values</strong><span>Numbers, strings, booleans, identifiers, arithmetic expressions, and grouped expressions.</span></div></section>
   </main>
-
-  <footer>
-    <p>Programming Token Analyzer | Automata Theory Project</p>
-  </footer>
+  <footer><div class="container"><p><strong>LexiScope</strong> Programming Token Analyzer</p><p>Automata Theory MCO · Compiler Front-End Demonstration</p></div></footer>
 </body>
 </html>
